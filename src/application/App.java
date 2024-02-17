@@ -34,20 +34,13 @@ public class App {
         date3 = input.nextLine();
         date4 = LocalDate.parse(date3, f1);
 
-        LocalDate now = LocalDate.now();
-
-        if (date4.isBefore(date2)) {
-            System.out.println("Error in reservation: Check-out date must be after check-in date");
-        }
-        else if(date2.isBefore(now) || date4.isBefore(now)){
-            System.out.println("Error in reservation: Reservation dates for update must be future dates");
+        if (reservation.updateDates(date2, date4) != null) {
+            System.out.println(reservation.updateDates(date2, date4));
         }
         else{
-            reservation.updateDates(date2, date4);
             System.out.println(reservation);
         }
 
-    
         input.close();
     }
 }

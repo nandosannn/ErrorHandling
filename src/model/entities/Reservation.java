@@ -45,11 +45,26 @@ public class Reservation {
         return diff;
     }
     
-    public void updateDates(LocalDate checkin, LocalDate checkout){
+    public String updateDates(LocalDate checkin, LocalDate checkout){
+        String error = null;
+        LocalDate now = LocalDate.now();
+        if (checkout.isBefore(checkin)) {
+            error = "Error in reservation: Check-out date must be after check-in date";
+            return error;
+        }
+
+        if (checkin.isBefore(now) || checkout.isBefore(now)) {
+            error = "Error in reservation: Reservation dates for update must be future dates";
+            return error;
+        }
+        
         this.checkin = checkin;
         this.checkout = checkout;
+
+        return error;
     }
 
+    @Override
     public String toString(){
         return "Room " + getRoomNumber() + ", check-in: " + getCheckin().format(f1) + ", check-out: " + getCheckout().format(f1) + ", " + duration() + " nights"; 
     }
